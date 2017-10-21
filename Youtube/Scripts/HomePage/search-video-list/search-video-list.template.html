@@ -1,58 +1,65 @@
-﻿<div style="padding:10px;">
-    Search: <input ng-model="$ctrl.query" />
+﻿<style>
+    .addPadding {
+        padding-left: 220px;
+        padding-right: 220px;
+    }
+</style>
+
+<div class="navbar navbar-fixed-top" style="padding:10px;background-color:white;border-bottom:1px solid rgb(232,232,232);">
+    <button ng-click="showMenu = !showMenu">Show/Hide</button>
+    <a href="/"><img src="https://www.youtube.com/yts/img/ringo/hitchhiker/logo_small_2x-vfl4_cFqn.png" width="100" height="30" /></a>
+    <input ng-model="$ctrl.query" placeholder="Search" />
 </div>
 
-<div class="panel panel-default">
-
-    <div style="width:200px;position:fixed;left:0px;padding-left:1%;">
-        <hr />
-        <p>
-            <a href="#!/playlists/" style="width:100%;height:100%;display:block;color:red;font-size:90%;">Playlists</a>
-        </p>
-        <table class="table table-hover">
-            <tbody>
-                <tr ng-repeat="playlist in $ctrl.playlists">
-                    <td style="width:100%;border:none;padding:10px;">
-                        <a href="#!/playlists/{{playlist.PlaylistID}}" style="width:100%;height:100%;display:block;text-decoration:none;color:black;">
-                            {{playlist.PlaylistName}}
-                        </a>
-                    </td>
-                    <td class="text-nowrap" style="border:none;">
-                        <button class="btn btn-sm btn-primary" ng-click="showDetails = ! showDetails">
-                            <span class="glyphicon glyphicon-edit"></span> Edit
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <hr />
-    </div>
-
-    <table class="table table-hover" style="width:40%;margin-top:1%;margin-left:30%;margin-right:30%;">
+<div ng-hide="showMenu" style="width:200px;position:fixed;left:0px;top:51px;padding:10px;background-color:white;height:100%;">
+    <p>
+        <a href="#!/playlists/" style="width:100%;height:100%;display:block;color:red;font-size:90%;">Playlists</a>
+    </p>
+    <table class="table table-hover">
         <tbody>
-            <tr ng-repeat="video in $ctrl.videos | filter:$ctrl.query">
-                <td>
-                    <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;">
-                        <div>
-                            <img ng-src="{{video.VideoThumbnail}}" alt="{{Video.VideoTitle}}" style="width:60px;height:60px;" />
-                        </div>
+            <tr ng-repeat="playlist in $ctrl.playlists">
+                <td style="border:none;padding:0px;margin:0px;">
+                    <a href="#!/playlists/{{playlist.PlaylistID}}" style="padding:10px;padding-top:5px;padding-bottom:5px;width:100%;height:100%;display:block;text-decoration:none;color:black;">
+                        {{playlist.PlaylistName}}
                     </a>
-                </td>
-                <td style="width:100%;">
-                    <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;color:black;">
-                        <p>{{video.VideoTitle}}</p>
-                    </a>
-                    <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;text-decoration:none;color:darkgray;">
-                        <p style="font-size:80%">{{video.VideoUploader}}</p>
-                    </a>
-                </td>
-                <td class="text-right text-nowrap">
-                    <button class="btn btn-sm btn-primary" ng-click="showDetails = ! showDetails">
-                        <span class="glyphicon glyphicon-edit"></span> Edit
-                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <hr />
+</div>
 
+<div ng-class="{addPadding:!showMenu}">
+    <div class="panel panel-default" style="width:693px;margin-top:60px;margin-left:auto;margin-right:auto;min-width:644px;">
+
+        <table class="table table-hover">
+            <tbody>
+                <tr ng-repeat="video in $ctrl.videos | filter:$ctrl.query">
+                    <td>
+                        <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;">
+                            <div>
+                                <img ng-src="{{video.VideoThumbnail}}" alt="{{Video.VideoTitle}}" style="width:246px;height:138px;" />
+                            </div>
+                        </a>
+                    </td>
+                    <td style="width:100%;position:relative;">
+                        <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;padding-right:10px;">
+                            <span style="font-size:125%">{{video.VideoTitle}}</span>
+                        </a>
+                        <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;text-decoration:none;color:rgb(118,118,118);">
+                            <span style="font-size:80%">{{video.VideoUploader}}</span>
+                        </a>
+                        <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;text-decoration:none;color:rgb(118,118,118);">
+                            <span style="font-size:80%">{{video.VideoUploadDate.slice(6, -2) | date:'dd/MM/yyyy'}} &bull; {{video.VideoViews | number}} views</span>
+                        </a>
+                        <a href="#!/videos/{{video.VideoID}}" style="width:100%;height:100%;display:block;text-decoration:none;color:rgb(118,118,118);">
+                            <span style="text-overflow: ellipsis;display:block;overflow:hidden;width:100%;font-size:80%">{{video.VideoDescription}}</span>
+                        </a>
+                        <span class="glyphicon glyphicon-menu-hamburger" style="position:absolute;top:10px;right:10px;"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 </div>

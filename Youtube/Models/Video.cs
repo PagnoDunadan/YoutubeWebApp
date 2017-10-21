@@ -18,6 +18,8 @@ namespace Youtube.Models
         [Required]
         public DateTime VideoUploadDate { get; set; }
         [Required]
+        public double VideoViews { get; set; }
+        [Required]
         public int VideoDuration { get; set; }
         [Required]
         public string VideoThumbnail { get; set; }

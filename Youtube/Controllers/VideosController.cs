@@ -22,6 +22,7 @@ namespace Youtube.Controllers
             public string VideoUrl { get; set; }
             public string VideoUploader { get; set; }
             public DateTime VideoUploadDate { get; set; }
+            public double VideoViews { get; set; }
             public int VideoDuration { get; set; }
             public string VideoThumbnail { get; set; }
             public string VideoDescription { get; set; }
@@ -39,6 +40,7 @@ namespace Youtube.Controllers
                     VideoUrl = v.VideoUrl,
                     VideoUploader = v.VideoUploader,
                     VideoUploadDate = v.VideoUploadDate,
+                    VideoViews = v.VideoViews,
                     VideoDuration = v.VideoDuration,
                     VideoThumbnail = v.VideoThumbnail,
                     VideoDescription = v.VideoDescription
