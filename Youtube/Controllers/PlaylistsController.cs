@@ -14,10 +14,23 @@ namespace Youtube.Controllers
     {
         private YoutubeContext db = new YoutubeContext();
 
+        public class PlaylistModel
+        {
+            public int PlaylistID { get; set; }
+            public string PlaylistName { get; set; }
+        }
+
         // GET: Playlists
         public ActionResult Index()
         {
-            return View(db.Playlists.ToList());
+            var data = db.Playlists
+                .Select(p => new PlaylistModel
+                {
+                    PlaylistID = p.PlaylistID,
+                    PlaylistName = p.PlaylistName
+                }).ToList();
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Playlists/Details/5

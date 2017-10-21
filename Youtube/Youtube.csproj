@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomePageController.cs" />
     <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,6 +174,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\HomePage\app.config.js" />
+    <Content Include="Scripts\HomePage\app.module.js" />
+    <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.component.js" />
+    <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.module.js" />
+    <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.template.html" />
+    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.component.js" />
+    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.module.js" />
+    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.template.html" />
+    <Content Include="Scripts\HomePage\search-video-list\search-video-list.component.js" />
+    <Content Include="Scripts\HomePage\search-video-list\search-video-list.module.js" />
+    <Content Include="Scripts\HomePage\search-video-list\search-video-list.template.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -197,6 +209,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\HomePage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

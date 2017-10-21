@@ -19,18 +19,34 @@ namespace Youtube.Controllers
         {
             public int VideoID { get; set; }
             public string VideoTitle { get; set; }
-            public string VideoAuthor { get; set; }
+            public string VideoUrl { get; set; }
+            public string VideoUploader { get; set; }
+            public DateTime VideoUploadDate { get; set; }
             public int VideoDuration { get; set; }
             public string VideoThumbnail { get; set; }
+            public string VideoDescription { get; set; }
         }
 
         // GET: Videos
         public ActionResult Index()
         {
-            var videos = db.Videos.ToList();
-
             // Vrati sve videe
+            IEnumerable data = new YoutubeContext().Videos
+                .Select(v => new VideoModel
+                {
+                    VideoID = v.VideoID,
+                    VideoTitle = v.VideoTitle,
+                    VideoUrl = v.VideoUrl,
+                    VideoUploader = v.VideoUploader,
+                    VideoUploadDate = v.VideoUploadDate,
+                    VideoDuration = v.VideoDuration,
+                    VideoThumbnail = v.VideoThumbnail,
+                    VideoDescription = v.VideoDescription
+                }).ToList();
+
+            // Vrati sve videe koji su u playlisti Michael Jackson
             //IEnumerable data = new YoutubeContext().Videos
+            //    .Where(v => v.Playlists.Any(p => p.PlaylistName.Contains("Michael Jackson")))
             //    .Select(v => new VideoModel
             //    {
             //        VideoID = v.VideoID,
@@ -39,18 +55,6 @@ namespace Youtube.Controllers
             //        VideoDuration = v.VideoDuration,
             //        VideoThumbnail = v.VideoThumbnail
             //    }).ToList();
-
-            // Vrati sve videe koji su u playlisti Michael Jackson
-            IEnumerable data = new YoutubeContext().Videos
-                .Where(v => v.Playlists.Any(p => p.PlaylistName.Contains("Michael Jackson")))
-                .Select(v => new VideoModel
-                {
-                    VideoID = v.VideoID,
-                    VideoTitle = v.VideoTitle,
-                    VideoAuthor = v.VideoAuthor,
-                    VideoDuration = v.VideoDuration,
-                    VideoThumbnail = v.VideoThumbnail
-                }).ToList();
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -81,7 +85,7 @@ namespace Youtube.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VideoID,VideoTitle,VideoAuthor,VideoDuration,VideoThumbnail")] Video video)
+        public ActionResult Create([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +117,7 @@ namespace Youtube.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VideoID,VideoTitle,VideoAuthor,VideoDuration,VideoThumbnail")] Video video)
+        public ActionResult Edit([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
             if (ModelState.IsValid)
             {
