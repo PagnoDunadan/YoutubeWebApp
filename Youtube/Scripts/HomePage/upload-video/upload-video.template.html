@@ -1,0 +1,144 @@
+﻿<style>
+    #bootstrap-overrides .navbarCustom {
+        height: 50px;
+        width: 100%;
+        min-width: 755px;
+        padding-top: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 6px;
+        background-color: white;
+        border-bottom: 1px solid rgb(232,232,232);
+    }
+
+    #bootstrap-overrides .menuToggleAndLogoDiv {
+        display: inline;
+    }
+
+    #bootstrap-overrides .searchInputDiv {
+        display: inline;
+        margin-left: 44px;
+    }
+
+    #bootstrap-overrides .menuToggleButton {
+        background: none;
+        border: none;
+        outline: none;
+        width: 38px;
+        height: 30px;
+        opacity: 0.25;
+    }
+
+    #bootstrap-overrides .navbarCustom:hover .menuToggleButton {
+        opacity: 0.7;
+        -moz-transform: translate(1px, -1px);
+        -ms-transform: translate(1px, -1px);
+        -o-transform: translate(1px, -1px);
+        -webkit-transform: translate(1px, -1px);
+        transform: translate(1px, -1px)
+    }
+
+    #bootstrap-overrides .menuLogo {
+        width: 100px;
+        height: 30px;
+        -moz-transform: translate(0px, -2px);
+        -ms-transform: translate(0px, -2px);
+        -o-transform: translate(0px, -2px);
+        -webkit-transform: translate(0px, -2px);
+        transform: translate(0px, -2px);
+    }
+
+    #bootstrap-overrides .searchInput {
+        padding-top: 2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        padding-bottom: 2px;
+        width: 50%;
+        min-width: 235px;
+        max-width: 582px;
+        vertical-align: middle;
+    }
+
+        #bootstrap-overrides .searchInput:hover {
+            outline: 1px solid lightgrey;
+        }
+
+    #bootstrap-overrides .searchButton {
+        background-color: rgb(240,240,240);
+        width: 66px;
+        height: 28px;
+        border: 1px solid grey;
+        outline: none;
+        padding: 0px;
+        border-left: 0px;
+        opacity: 0.4;
+        vertical-align: middle;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        margin-bottom: 2px;
+    }
+
+        #bootstrap-overrides .searchButton:hover {
+            opacity: 0.8;
+        }
+
+    #bootstrap-overrides .panelCustom {
+        width: 693px;
+        margin-top: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 644px;
+    }
+</style>
+
+<div class="navbar navbar-fixed-top navbarCustom">
+    <div class="menuToggleAndLogoDiv">
+        <button ng-click="showMenu = !showMenu" class="menuToggleButton glyphicon glyphicon-menu-hamburger"></button>
+        <a href="/"><img src="https://www.youtube.com/yts/img/ringo/hitchhiker/logo_small_2x-vfl4_cFqn.png" class="menuLogo" /></a>
+    </div>
+    <div class="searchInputDiv">
+        <input ng-model="$ctrl.searchExpression" ng-keydown="$event.keyCode === 13 && $ctrl.search()" placeholder="Search" class="searchInput" /><button class="glyphicon glyphicon-search searchButton" ng-click="$ctrl.search()"></button>
+    </div>
+    <div style="float:right;">
+        <a class="btn btn-default"><span class="glyphicon glyphicon-open"></span> Upload</a>
+    </div>
+</div>
+
+<div class="panel panel-default panelCustom">
+    <form style="padding:10px;">
+        <div class="form-group">
+            <label for="newVideoTitle">Title:</label>
+            <input ng-model="$ctrl.newVideoTitle" type="text" class="form-control" id="newVideoTitle">
+        </div>
+        <div class="form-group">
+            <label for="newVideoUrl">Url:</label>
+            <input ng-model="$ctrl.newVideoUrl" type="text" class="form-control" id="newVideoUrl">
+        </div>
+        <div class="form-group">
+            <label for="newVideoUploader">Uploader:</label>
+            <input ng-model="$ctrl.newVideoUploader" type="text" class="form-control" id="newVideoUploader">
+        </div>
+        <div class="form-group">
+            <label for="newVideoUploadDate">Upload date (dd/MM/yyyy HH:mm:ss):</label>
+            <input ng-model="$ctrl.newVideoUploadDate" type="datetime" class="form-control" id="newVideoUploadDate">
+        </div>
+        <div class="form-group">
+            <label for="newVideoViews">Views:</label>
+            <input ng-model="$ctrl.newVideoViews" type="text" class="form-control" id="newVideoViews">
+        </div>
+        <div class="form-group">
+            <label for="newVideoDuration">Duration (in seconds):</label>
+            <input ng-model="$ctrl.newVideoDuration" type="text" class="form-control" id="newVideoDuration">
+        </div>
+        <div class="form-group">
+            <label for="newVideoThumbnail">Thumbnail:</label>
+            <input ng-model="$ctrl.newVideoThumbnail" type="text" class="form-control" id="newVideoThumbnail">
+        </div>
+        <div class="form-group">
+            <label for="newVideoDescription">Description:</label>
+            <textarea ng-model="$ctrl.newVideoDescription" class="form-control" rows="5" id="newVideoDescription"></textarea>
+        </div>
+        <button ng-click="$ctrl.upload()" type="submit" class="btn btn-default pull-right">Submit</button>
+        <div style="clear:both"></div>
+    </form>
+</div>

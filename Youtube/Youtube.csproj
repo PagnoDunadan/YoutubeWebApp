@@ -151,6 +151,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
     <Compile Include="Controllers\PlaylistsController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,20 +163,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\HomePage\app.config.js" />
     <Content Include="Scripts\HomePage\app.module.js" />
+    <Content Include="Scripts\HomePage\core\dateDiff\dateDiff.filter.js" />
+    <Content Include="Scripts\HomePage\core\secToMinSec\secToMinSec.filter.js" />
+    <Content Include="Scripts\HomePage\core\core.module.js" />
+    <Content Include="Scripts\HomePage\core\textLength\textLength.filter.js" />
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.component.js" />
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.module.js" />
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.template.html" />
@@ -185,6 +201,9 @@
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.component.js" />
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.module.js" />
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.template.html" />
+    <Content Include="Scripts\HomePage\upload-video\upload-video.component.js" />
+    <Content Include="Scripts\HomePage\upload-video\upload-video.module.js" />
+    <Content Include="Scripts\HomePage\upload-video\upload-video.template.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -193,6 +212,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
@@ -214,16 +238,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Playlists\" />
+    <Folder Include="Views\Search\" />
+    <Folder Include="Views\Upload\" />
     <Folder Include="Views\Videos\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

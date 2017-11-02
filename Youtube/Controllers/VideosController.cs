@@ -28,6 +28,12 @@ namespace Youtube.Controllers
             public string VideoDescription { get; set; }
         }
 
+        public class PlaylistModel
+        {
+            public int PlaylistID { get; set; }
+            public string PlaylistName { get; set; }
+        }
+
         // GET: Videos
         public ActionResult Index()
         {
@@ -76,6 +82,37 @@ namespace Youtube.Controllers
             return View(video);
         }
 
+        // GET: Videos/Search/5
+        public ActionResult Search(string searchExpression)
+        {
+            if (searchExpression == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+           // Vrati sve videe koji su u playlisti Michael Jackson
+           var videos = db.Videos
+               .Where(v => v.VideoTitle.Contains(searchExpression) || v.VideoUploader.Contains(searchExpression))
+               .Select(v => new VideoModel
+               {
+                   VideoID = v.VideoID,
+                   VideoTitle = v.VideoTitle,
+                   VideoUrl = v.VideoUrl,
+                   VideoUploader = v.VideoUploader,
+                   VideoUploadDate = v.VideoUploadDate,
+                   VideoViews = v.VideoViews,
+                   VideoDuration = v.VideoDuration,
+                   VideoThumbnail = v.VideoThumbnail,
+                   VideoDescription = v.VideoDescription
+               }).ToList();
+
+            if (videos == null)
+            {
+                return HttpNotFound();
+            }
+            return Json(videos, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Videos/Create
         public ActionResult Create()
         {
@@ -86,17 +123,19 @@ namespace Youtube.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
+        public ActionResult Create([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoViews,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
             if (ModelState.IsValid)
             {
                 db.Videos.Add(video);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json("Success!");
             }
 
-            return View(video);
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+            return Json(errors);
         }
 
         // GET: Videos/Edit/5
@@ -118,16 +157,18 @@ namespace Youtube.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
+        public ActionResult Edit([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoViews,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(video).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(video);
             }
-            return View(video);
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+            return Json(errors);
         }
 
         // GET: Videos/Delete/5
@@ -154,6 +195,89 @@ namespace Youtube.Controllers
             db.Videos.Remove(video);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Videos/PlaylistsFor/5
+        public ActionResult PlaylistsFor(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var playlists = db.Videos
+                .Find(id).Playlists
+                .Select(p => new PlaylistModel
+                {
+                    PlaylistID = p.PlaylistID,
+                    PlaylistName = p.PlaylistName,
+                }).ToList();
+
+            if (playlists == null)
+            {
+                return HttpNotFound();
+            }
+            return Json(playlists, JsonRequestBehavior.AllowGet);
+        }
+
+        // POST: Videos/PlaylistAdd/5
+        [HttpPost]
+        public ActionResult PlaylistAdd(int? id, Playlist sentPlaylist)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var video = db.Videos.Find(id);
+            var playlist = db.Playlists.Find(sentPlaylist.PlaylistID);
+            video.Playlists.Add(playlist);
+            db.Entry(video).State = EntityState.Modified;
+            db.SaveChanges();
+
+            var playlists = db.Videos
+                .Find(id).Playlists
+                .Select(p => new PlaylistModel
+                {
+                    PlaylistID = p.PlaylistID,
+                    PlaylistName = p.PlaylistName,
+                }).ToList();
+
+            if (playlists == null)
+            {
+                return HttpNotFound();
+            }
+            return Json(playlists, JsonRequestBehavior.AllowGet);
+        }
+
+        // POST: Videos/PlaylistDelete/5
+        [HttpPost]
+        public ActionResult PlaylistDelete(int? id, Playlist sentPlaylist)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var video = db.Videos.Find(id);
+            var playlist = db.Playlists.Find(sentPlaylist.PlaylistID);
+            video.Playlists.Remove(playlist);
+            db.Entry(video).State = EntityState.Modified;
+            db.SaveChanges();
+
+            var playlists = db.Videos
+                .Find(id).Playlists
+                .Select(p => new PlaylistModel
+                {
+                    PlaylistID = p.PlaylistID,
+                    PlaylistName = p.PlaylistName,
+                }).ToList();
+
+            if (playlists == null)
+            {
+                return HttpNotFound();
+            }
+            return Json(playlists, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

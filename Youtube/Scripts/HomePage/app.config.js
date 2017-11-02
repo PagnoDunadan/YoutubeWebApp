@@ -16,6 +16,9 @@ angular.
                 when('/recommended', {
                     template: '<recommended-video-list></recommended-video-list>'
                 }).
-                otherwise('/recommended');
+                when('/upload', {
+                    template: '<upload-video></upload-video>'
+                }).
+                otherwise('/search/m');
         }
     ]);

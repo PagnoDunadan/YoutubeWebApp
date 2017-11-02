@@ -2,5 +2,5 @@
 
 // Define the `searchVideoList` module
 angular.module('searchVideoList', [
-    'ngRoute'
+    'ngRoute',
 ]);
