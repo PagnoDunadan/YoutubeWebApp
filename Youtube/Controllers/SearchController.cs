@@ -27,20 +27,41 @@ namespace Youtube.Controllers
         // GET: Search/searchExpression
         public ActionResult Index(string searchExpression)
         {
-            var videos = db.Videos
-               .Where(v => v.VideoTitle.Contains(searchExpression) || v.VideoUploader.Contains(searchExpression))
-               .Select(v => new VideoModel
-               {
-                   VideoID = v.VideoID,
-                   VideoTitle = v.VideoTitle,
-                   VideoUrl = v.VideoUrl,
-                   VideoUploader = v.VideoUploader,
-                   VideoUploadDate = v.VideoUploadDate,
-                   VideoViews = v.VideoViews,
-                   VideoDuration = v.VideoDuration,
-                   VideoThumbnail = v.VideoThumbnail,
-                   VideoDescription = v.VideoDescription
-               }).ToList();
+            var videos = new List<VideoModel> { };
+
+            if (searchExpression == "undefined")
+            {
+                videos = db.Videos
+                    .Select(v => new VideoModel
+                    {
+                        VideoID = v.VideoID,
+                        VideoTitle = v.VideoTitle,
+                        VideoUrl = v.VideoUrl,
+                        VideoUploader = v.VideoUploader,
+                        VideoUploadDate = v.VideoUploadDate,
+                        VideoViews = v.VideoViews,
+                        VideoDuration = v.VideoDuration,
+                        VideoThumbnail = v.VideoThumbnail,
+                        VideoDescription = v.VideoDescription
+                    }).ToList();
+            }
+            else
+            {
+                videos = db.Videos
+                    .Where(v => v.VideoTitle.Contains(searchExpression) || v.VideoUploader.Contains(searchExpression))
+                    .Select(v => new VideoModel
+                    {
+                        VideoID = v.VideoID,
+                        VideoTitle = v.VideoTitle,
+                        VideoUrl = v.VideoUrl,
+                        VideoUploader = v.VideoUploader,
+                        VideoUploadDate = v.VideoUploadDate,
+                        VideoViews = v.VideoViews,
+                        VideoDuration = v.VideoDuration,
+                        VideoThumbnail = v.VideoThumbnail,
+                        VideoDescription = v.VideoDescription
+                    }).ToList();
+            }
 
             return Json(videos, JsonRequestBehavior.AllowGet);
         }

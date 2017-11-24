@@ -104,6 +104,9 @@
         text-decoration: none;
         color: black;
     }
+        #bootstrap-overrides .menuPlaylistsListItem:hover {
+            cursor: pointer;
+        }
     #bootstrap-overrides .videoContainerPadding {
         padding-left: 220px;
         padding-right: 220px;
@@ -182,119 +185,207 @@
     #bootstrap-overrides .videoTextTd:hover .videoTextUploader {
         color: rgb(44,141,209);
     }
+    #bootstrap-overrides .playlistsModal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        z-index: 9999;
+        border: 1px solid darkgrey;
+        border-radius: 6px;
+        background: #fff;
+        padding: 10px;
+        width: 320px;
+        height: 360px;
+        overflow: auto;
+    }
+
+    #bootstrap-overrides .playlistsModalBackdrop {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        background: rgb(0, 0, 0);
+        background: rgba(0, 0, 0, 0.3);
+    }
+    #bootstrap-overrides .playlistsTitle {
+        text-align: center;
+        font-size: 200%;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
 </style>
 
 <div class="navbar navbar-fixed-top navbarCustom">
     <div class="menuToggleAndLogoDiv">
-        <button ng-click="showMenu = !showMenu" class="menuToggleButton glyphicon glyphicon-menu-hamburger"></button>
-        <a href="/"><img src="https://www.youtube.com/yts/img/ringo/hitchhiker/logo_small_2x-vfl4_cFqn.png" class="menuLogo" /></a>
+    <button ng-click="showMenu = !showMenu" class="menuToggleButton glyphicon glyphicon-menu-hamburger"></button>
+    <a href="/#!/search/"><img src="https://www.youtube.com/yts/img/ringo/hitchhiker/logo_small_2x-vfl4_cFqn.png" class="menuLogo" /></a>
     </div>
+
     <div class="searchInputDiv">
-        <input ng-model="$ctrl.searchExpression" ng-keydown="$event.keyCode === 13 && $ctrl.search()" placeholder="Search" class="searchInput" /><button class="glyphicon glyphicon-search searchButton" ng-click="$ctrl.search()"></button>
+    <input ng-model="$ctrl.searchExpression" ng-keydown="$event.keyCode === 13 && $ctrl.search()" placeholder="Search" class="searchInput" /><button class="glyphicon glyphicon-search searchButton" ng-click="$ctrl.search()"></button>
     </div>
-    <div style="float:right;">
-        <a href="/#!/upload" class="btn btn-default"><span class="glyphicon glyphicon-open"></span> Upload</a>
+
+    <div style="float: right;">
+    <a href="/#!/upload" class="btn btn-default"><span class="glyphicon glyphicon-open"></span> Upload</a>
     </div>
 </div>
 
 <div ng-hide="showMenu" class="menu">
     <p>
-        <a href="#!/playlists/" class="menuPlaylistsLink">Playlists</a>
+    <a ng-click="showPlaylistsModal = true" href="" class="menuPlaylistsLink">Playlists</a>
     </p>
+
     <table class="table table-hover">
-        <tbody>
-            <tr ng-repeat="playlist in $ctrl.playlists">
-                <td class="menuTd">
-                    <a href="#!/playlists/{{playlist.PlaylistID}}" class="menuPlaylistsListItem">
-                        {{playlist.PlaylistName}}
-                    </a>
-                </td>
-            </tr>
-        </tbody>
+    <tbody>
+        <tr ng-repeat="playlist in $ctrl.playlists">
+        <td class="menuTd">
+        <a href="#!/playlists/{{playlist.PlaylistID}}" class="menuPlaylistsListItem">{{playlist.PlaylistName}}</a>
+        </td>
+        </tr>
+    </tbody>
     </table>
     <hr />
 </div>
 
 <div ng-class="{videoContainerPadding:!showMenu}">
-    <div class="panel panel-default panelCustom">
-        <table class="table table-hover">
-            <tbody>
-                <tr ng-repeat="video in $ctrl.videos">
-                    <td>
-                        <a href="#!/videos/{{video.VideoID}}" class="videoImageLink">
-                            <div class="videoImageDiv">
-                                <img ng-src="{{video.VideoThumbnail}}" alt="{{Video.VideoTitle}}" class="videoImageImage" />
-                                <div class="videoImageTime"><span>{{video.VideoDuration | secToMinSec}}</span></div>
-                            </div>
-                        </a>
-                    </td>
-                    <td class="videoTextTd">
-                        <a href="#!/videos/{{video.VideoID}}" class="videoTextTitle">
-                            <span style="font-size:125%">{{video.VideoTitle}}</span>
-                        </a>
-                        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
-                            <span style="font-size:80%" class="videoTextUploader">{{video.VideoUploader}}</span>
-                        </a>
-                        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
-                            <span style="font-size:80%">{{video.VideoUploadDate.slice(6, -2) | dateDiff}} &bull; {{video.VideoViews | number}} views</span>
-                        </a>
-                        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
-                            <span style="display:block;font-size:80%">{{video.VideoDescription | textLength:'200'}}</span>
-                        </a>
-                        <span ng-click="showUpdateForm = ! showUpdateForm" class="glyphicon glyphicon-edit videoTextMenuButton"></span>
-                        <span ng-click="$ctrl.getPlaylistsForVideo(video.VideoID);showPlaylistsForm = ! showPlaylistsForm" class="glyphicon glyphicon glyphicon-list videoTextMenu2Button"></span>
-                        
-                        <form ng-show="showUpdateForm" style="padding:10px;">
-                            <div class="form-group">
-                                <label for="editVideoTitle">Title:</label>
-                                <input ng-model="video.VideoTitle" type="text" class="form-control" id="editVideoTitle">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoUrl">Url:</label>
-                                <input ng-model="video.VideoUrl" type="text" class="form-control" id="editVideoUrl">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoUploader">Uploader:</label>
-                                <input ng-model="video.VideoUploader" type="text" class="form-control" id="editVideoUploader">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoViews">Views:</label>
-                                <input ng-model="video.VideoViews" type="text" class="form-control" id="editVideoViews">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoDuration">Duration (in seconds):</label>
-                                <input ng-model="video.VideoDuration" type="text" class="form-control" id="editVideoDuration">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoThumbnail">Thumbnail:</label>
-                                <input ng-model="video.VideoThumbnail" type="text" class="form-control" id="editVideoThumbnail">
-                            </div>
-                            <div class="form-group">
-                                <label for="editVideoDescription">Description:</label>
-                                <textarea ng-model="video.VideoDescription" class="form-control" rows="5" id="editVideoDescription"></textarea>
-                            </div>
-                            <button ng-click="$ctrl.editVideo(video.VideoID,video.VideoTitle,video.VideoUrl,video.VideoUploader,(video.VideoUploadDate.slice(6, -2) | date),video.VideoViews,video.VideoDuration,video.VideoThumbnail,video.VideoDescription)" type="submit" class="btn btn-default pull-right">Submit</button>
-                            <div style="clear:both"></div>
-                        </form>
-                        
-                        <form ng-show="showPlaylistsForm" style="padding:10px;">
-                            <p>In Playlists:</p>
-                            <div ng-repeat="playlist in $ctrl.videoInPlaylists[video.VideoID]">
-                                <p>{{playlist.PlaylistName}}
-                                    <button ng-click="$ctrl.deleteVideoPlaylist(video, playlist)" type="submit" class="btn btn-default btn-xs">Delete</button>
-                                </p>
-                            </div>
+<div class="panel panel-default panelCustom">
+<table class="table table-hover">
+<tbody>
+    <tr ng-repeat="video in $ctrl.videos">
+    <td>
+        <a href="#!/videos/{{video.VideoID}}" class="videoImageLink">
+        <div class="videoImageDiv">
+        <img ng-src="{{video.VideoThumbnail}}" alt="{{Video.VideoTitle}}" class="videoImageImage" />
+        <div class="videoImageTime"><span>{{video.VideoDuration | secToMinSec}}</span></div>
+        </div>
+        </a>
+    </td>
 
-                            <div class="form-group">
-                                <label for="selectPlaylist">Add to Playlist:</label>
-                                <select ng-model="selectedPlaylist" ng-options="playlist.PlaylistName for playlist in $ctrl.videoNotInPlaylists[video.VideoID]" id="selectPlaylist"></select>
-                                <button ng-click="$ctrl.addVideoPlaylist(video, selectedPlaylist)" type="submit" class="btn btn-default btn-sm">Add</button>
-                            </div>
+    <td class="videoTextTd">
+        <a href="#!/videos/{{video.VideoID}}" class="videoTextTitle">
+        <span style="font-size: 125%">{{video.VideoTitle}}</span>
+        </a>
 
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
+        <span style="font-size: 80%" class="videoTextUploader">{{video.VideoUploader}}</span>
+        </a>
+
+        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
+        <span style="font-size: 80%">{{video.VideoUploadDate.slice(6, -2) | dateDiff}} &bull; {{video.VideoViews | number}} views</span>
+        </a>
+
+        <a href="#!/videos/{{video.VideoID}}" class="videoTextDetails">
+        <span style="display: block; font-size: 80%">{{video.VideoDescription | textLength:'200'}}</span>
+        </a>
+
+        <span ng-click="showPlaylistsForm = false; showUpdateForm = !showUpdateForm;" class="glyphicon glyphicon-edit videoTextMenuButton"></span>
+        <span ng-click="$ctrl.getPlaylistsForVideo(video.VideoID); showUpdateForm=false; showPlaylistsForm = !showPlaylistsForm;" class="glyphicon glyphicon glyphicon-list videoTextMenu2Button"></span>
+                        
+        <form ng-show="showUpdateForm" style="padding: 10px;">
+            <div class="form-group">
+            <label for="editVideoTitle">Title:</label>
+            <input ng-model="video.VideoTitle" type="text" class="form-control" id="editVideoTitle">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoUrl">Url:</label>
+            <input ng-model="video.VideoUrl" type="text" class="form-control" id="editVideoUrl">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoUploader">Uploader:</label>
+            <input ng-model="video.VideoUploader" type="text" class="form-control" id="editVideoUploader">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoViews">Views:</label>
+            <input ng-model="video.VideoViews" type="text" class="form-control" id="editVideoViews">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoDuration">Duration (in seconds):</label>
+            <input ng-model="video.VideoDuration" type="text" class="form-control" id="editVideoDuration">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoThumbnail">Thumbnail:</label>
+            <input ng-model="video.VideoThumbnail" type="text" class="form-control" id="editVideoThumbnail">
+            </div>
+
+            <div class="form-group">
+            <label for="editVideoDescription">Description:</label>
+            <textarea ng-model="video.VideoDescription" class="form-control" rows="5" id="editVideoDescription"></textarea>
+            </div>
+
+            <button ng-click="$ctrl.editVideo(video.VideoID,video.VideoTitle,video.VideoUrl,video.VideoUploader,(video.VideoUploadDate.slice(6, -2) | date),video.VideoViews,video.VideoDuration,video.VideoThumbnail,video.VideoDescription)"
+                    type="submit" class="btn btn-success pull-right">Save</button>
+            <div style="clear: both"></div>
+        </form>
+                        
+        <form ng-show="showPlaylistsForm" style="padding: 10px;">
+            <p>In Playlists:</p>
+
+            <div ng-repeat="playlist in $ctrl.videoInPlaylists[video.VideoID]">
+            <p>{{playlist.PlaylistName}} <button ng-click="$ctrl.deleteVideoPlaylist(video, playlist)" type="submit" class="btn btn-danger btn-xs">Delete</button></p>
+            </div>
+
+            <div class="form-group">
+            <label for="selectPlaylist">Add to Playlist:</label>
+            <select ng-model="selectedPlaylist" ng-options="playlist.PlaylistName for playlist in $ctrl.videoNotInPlaylists[video.VideoID]" id="selectPlaylist"></select>
+            <button ng-click="$ctrl.addVideoPlaylist(video, selectedPlaylist)" type="submit" class="btn btn-primary btn-xs">Add</button>
+            </div>
+        </form>
+    </td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div ng-show="showPlaylistsModal">
+<div class="playlistsModal">
+    <p class="playlistsTitle">Playlists</p>
+
+    <table class="table table-hover">
+    <tbody>
+        <tr ng-repeat="playlist in $ctrl.playlists">
+        <td class="menuTd">   
+            <br />
+            <form>
+                <input ng-init="name = playlist.PlaylistName" ng-model="name"
+                        type="text" placeholder="Playlist Name" class="form-control" />
+
+                <div class="btn-group btn-group-justified" role="group">
+                <a ng-click="$ctrl.deletePlaylist(playlist.PlaylistID)" class="btn btn-danger btn-sm">Delete</a>
+                <a ng-click="name = playlist.PlaylistName" class="btn btn-primary btn-sm">Reset</a>
+                <a ng-click="$ctrl.updatePlaylist(playlist.PlaylistID, name)" class="btn btn-success btn-sm">Save</a>
+                </div>
+            </form>
+            <br />
+        </td>
+        </tr>
+    </tbody>
+    </table>
+
+    <hr />
+
+    <div class="btn-group btn-group-justified" role="group">
+    <a ng-click="showAddPlaylistForm = !showAddPlaylistForm" class="btn btn-default btn-sm">Add a new Playlist</a>
     </div>
+
+    <form ng-show="showAddPlaylistForm">
+        <input ng-init="name = ''" ng-model="name"
+               type="text" placeholder="Playlist Name" class="form-control" />
+
+        <div class="btn-group btn-group-justified" role="group">
+            <a ng-click="name = ''; showAddPlaylistForm = false" class="btn btn-danger btn-sm">Cancel</a>
+            <a ng-click="name = ''" class="btn btn-primary btn-sm">Reset</a>
+            <a ng-click="$ctrl.createPlaylist(name); name = ''; showAddPlaylistForm = false" class="btn btn-success btn-sm">Save</a>
+        </div>
+    </form>
+</div>
+<div class="playlistsModalBackdrop" ng-click="showPlaylistsModal = false" />
 </div>

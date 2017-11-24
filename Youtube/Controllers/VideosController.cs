@@ -37,7 +37,6 @@ namespace Youtube.Controllers
         // GET: Videos
         public ActionResult Index()
         {
-            // Vrati sve videe
             IEnumerable data = new YoutubeContext().Videos
                 .Select(v => new VideoModel
                 {
@@ -68,19 +67,19 @@ namespace Youtube.Controllers
         }
 
         // GET: Videos/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Video video = db.Videos.Find(id);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
-            return View(video);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Video video = db.Videos.Find(id);
+        //    if (video == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(video);
+        //}
 
         // GET: Videos/Search/5
         public ActionResult Search(string searchExpression)
@@ -90,7 +89,6 @@ namespace Youtube.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-           // Vrati sve videe koji su u playlisti Michael Jackson
            var videos = db.Videos
                .Where(v => v.VideoTitle.Contains(searchExpression) || v.VideoUploader.Contains(searchExpression))
                .Select(v => new VideoModel
@@ -114,14 +112,12 @@ namespace Youtube.Controllers
         }
 
         // GET: Videos/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: Videos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult Create([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoViews,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
@@ -131,7 +127,6 @@ namespace Youtube.Controllers
                 db.SaveChanges();
                 return Json("Success!");
             }
-
             var errors = ModelState.Select(x => x.Value.Errors)
                            .Where(y => y.Count > 0)
                            .ToList();
@@ -139,23 +134,21 @@ namespace Youtube.Controllers
         }
 
         // GET: Videos/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Video video = db.Videos.Find(id);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
-            return View(video);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Video video = db.Videos.Find(id);
+        //    if (video == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(video);
+        //}
 
         // POST: Videos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult Edit([Bind(Include = "VideoID,VideoTitle,VideoUrl,VideoUploader,VideoUploadDate,VideoViews,VideoDuration,VideoThumbnail,VideoDescription")] Video video)
         {
@@ -172,29 +165,28 @@ namespace Youtube.Controllers
         }
 
         // GET: Videos/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Video video = db.Videos.Find(id);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
-            return View(video);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Video video = db.Videos.Find(id);
+        //    if (video == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(video);
+        //}
 
         // POST: Videos/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Video video = db.Videos.Find(id);
             db.Videos.Remove(video);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content("Deleted!");
         }
 
         // GET: Videos/PlaylistsFor/5

@@ -8,17 +8,17 @@ angular.
 
             $routeProvider.
                 when('/playlists/:PlaylistID', {
-                    template: '<playlist-video-list></playlist-video-list>'
+                    template: '<search-video-list></search-video-list>'
                 }).
                 when('/search/:SearchQuery', {
                     template: '<search-video-list></search-video-list>'
                 }).
-                when('/recommended', {
-                    template: '<recommended-video-list></recommended-video-list>'
+                when('/search/', {
+                    template: '<search-video-list></search-video-list>'
                 }).
                 when('/upload', {
                     template: '<upload-video></upload-video>'
                 }).
-                otherwise('/search/m');
+                otherwise('/search/');
         }
     ]);
