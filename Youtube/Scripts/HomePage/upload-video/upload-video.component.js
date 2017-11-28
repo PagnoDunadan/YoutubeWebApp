@@ -10,7 +10,7 @@ angular.
             document.title = "Youtube - Upload";
 
             self.search = function search() {
-                $location.path('/search/' + self.searchExpression);
+                $location.path('/search/' + self.searchExpression ? self.searchExpression : "");
             };
 
             self.upload = function upload() {

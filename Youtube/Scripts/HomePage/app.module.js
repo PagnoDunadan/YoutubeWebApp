@@ -6,5 +6,5 @@ angular.module('youtubeApp', [
     'uploadVideo',
     'playlistVideoList',
     'searchVideoList',
-    'recommendedVideoList'
+    'playVideo'
 ]);

@@ -195,9 +195,9 @@
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.component.js" />
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.module.js" />
     <Content Include="Scripts\HomePage\playlist-video-list\playlist-video-list.template.html" />
-    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.component.js" />
-    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.module.js" />
-    <Content Include="Scripts\HomePage\recommended-video-list\recommended-video-list.template.html" />
+    <Content Include="Scripts\HomePage\play-video\play-video.component.js" />
+    <Content Include="Scripts\HomePage\play-video\play-video.module.js" />
+    <Content Include="Scripts\HomePage\play-video\play-video.template.html" />
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.component.js" />
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.module.js" />
     <Content Include="Scripts\HomePage\search-video-list\search-video-list.template.html" />

@@ -7,6 +7,9 @@ angular.
             $locationProvider.hashPrefix('!');
 
             $routeProvider.
+                when('/videos/:VideoID', {
+                    template: '<play-video></play-video>'
+                }).
                 when('/playlists/:PlaylistID', {
                     template: '<search-video-list></search-video-list>'
                 }).

@@ -66,6 +66,37 @@ namespace Youtube.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        // GET: Videos/Find/5
+        public ActionResult Find(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Video video = db.Videos.Find(id);
+
+            var data = new VideoModel
+            {
+                VideoID = video.VideoID,
+                VideoTitle = video.VideoTitle,
+                VideoUrl = video.VideoUrl,
+                VideoUploader = video.VideoUploader,
+                VideoUploadDate = video.VideoUploadDate,
+                VideoViews = video.VideoViews,
+                VideoDuration = video.VideoDuration,
+                VideoThumbnail = video.VideoThumbnail,
+                VideoDescription = video.VideoDescription
+            };
+
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Videos/Details/5
         //public ActionResult Details(int? id)
         //{
